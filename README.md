@@ -9,4 +9,4 @@ Currently implemented:
 - [ ] Set
 
 ## Usage
-run `make` to compile the library and run tests.
+Run `make` to compile the library and run tests.
