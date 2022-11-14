@@ -10,9 +10,9 @@ else
 endif
 
 ifeq ($(detected_os), windows)
-	rm = del
+	rm = del /s /q /f
 else
-	rm = rm
+	rm = rm -rf
 endif
 
 export rm
@@ -20,7 +20,7 @@ export rm
 MODULES = queue
 OBJ_FILES = queue/queue.o
 
-all: build clean
+all: build clean_tests
 
 debug: $(MODULES)
 	$(foreach module, $(MODULES), +$(MAKE) -C $(module) debug)
@@ -30,5 +30,8 @@ build: $(MODULES)
 	$(foreach module, $(MODULES), +$(MAKE) -C $(module))
 	ar rcs libcontainers.a $(OBJ_FILES)
 
-clean: $(MODULES)
+clean: clean_tests
+	$(rm) libcontainers.a
+
+clean_tests: $(MODULES)
 	$(foreach module, $(MODULES), +$(MAKE) -C $(module) clean)
