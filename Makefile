@@ -17,21 +17,21 @@ endif
 
 export rm
 
-MODULES = queue
-OBJ_FILES = queue/queue.o
+MODULES = queue dict
+OBJ_FILES = queue/queue.o dict/dict.o
 
 all: build clean_tests
 
 debug: $(MODULES)
-	$(foreach module, $(MODULES), +$(MAKE) -C $(module) debug)
+	$(foreach module, $(MODULES), $(MAKE) -C $(module) debug &&) :
 	ar rcs libcontainers.a $(OBJ_FILES)
 
 build: $(MODULES)
-	$(foreach module, $(MODULES), +$(MAKE) -C $(module))
+	$(foreach module, $(MODULES), $(MAKE) -C $(module) &&) :
 	ar rcs libcontainers.a $(OBJ_FILES)
 
 clean: clean_tests
 	$(rm) libcontainers.a
 
 clean_tests: $(MODULES)
-	$(foreach module, $(MODULES), +$(MAKE) -C $(module) clean)
+	$(foreach module, $(MODULES), $(MAKE) -C $(module) clean &&) :
